@@ -18,10 +18,10 @@ while ($row = mysqli_fetch_assoc($result)) {
 }
 foreach($results as $r){
   $posts[$r['id']]['author']=$r['author'];
-  $posts[$r['id']]['tags'][]=$r['tag'];
-  $posts[$r['id']]['title']=$r['title'];
-  $posts[$r['id']]['metatag']=$r['metatag'];
-  $posts[$r['id']]['tags'] = array_unique($posts[$r['id']]['tags']);
-  unset($posts['id']);
+  isset($posts[$r['id']]['tags']) ?  null :  $posts[$r['id']]['tags']=array();
+  in_array($r['tag'], $posts[$r['id']]['tags'])? null: array_push($posts[$r['id']]['tags'], $r['tag']);  
+  $posts[$r['id']]['title']=$r['title'];  
+  isset($posts[$r['id']]['metatags']) ?  null :  $posts[$r['id']]['metatags']=array();
+  in_array($r['metatag'], $posts[$r['id']]['metatags'])? null: array_push($posts[$r['id']]['metatags'], $r['metatag']);  
 }
 echo json_encode($posts, JSON_UNESCAPED_UNICODE);
